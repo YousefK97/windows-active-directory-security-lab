@@ -152,6 +152,33 @@ John Smith was assigned to the custom `IT-Admins` security group to provide IT-s
 
 **Assessment:** The current configuration demonstrates a basic least-privilege approach. Further hardening could include dedicated administrative accounts, stronger controls around the built-in Administrator account, and regular privileged-group membership reviews.
 
+### Endpoint Privilege Review
+
+The local `Administrators` group on the Windows 10 domain client (`MSEDGEWIN10`) was reviewed using PowerShell.
+
+The following members were identified:
+
+| Account / Group             | Source           |
+| --------------------------- | ---------------- |
+| `CORP\Domain Admins`        | Active Directory |
+| `MSEDGEWIN10\Administrator` | Local            |
+| `MSEDGEWIN10\IEUser`        | Local            |
+
+`CORP\Domain Admins` provides domain-level administrators with administrative access to the workstation, which is a common default configuration for domain-joined Windows systems.
+
+The local `IEUser` account was also identified as a member of the local Administrators group. This represents a potential least-privilege concern because a local user account with administrative privileges has greater ability to modify the workstation and security configuration.
+
+### Security Observation
+
+**Finding:** `MSEDGEWIN10\IEUser` has local administrator privileges.
+
+**Risk:** A compromised local account with administrative privileges could have greater control over the endpoint and potentially weaken security controls.
+
+**Recommendation:** In a production environment, local administrative privileges should be restricted to accounts that require them for legitimate administrative tasks. Standard user accounts should normally operate without local administrator privileges.
+
+**Lab Decision:** The account was not removed because this is a controlled lab environment and the existing configuration was preserved for documentation and analysis.
+
+
 ## 9. Security Assessment
 
 The lab demonstrates a basic but functional Active Directory security baseline.
