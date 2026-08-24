@@ -18,6 +18,7 @@ The lab demonstrates practical Windows administration and cybersecurity skills i
 | Network           | Private lab network        |
 | DNS Server        | `192.168.87.10`            |
 
+```mermaid
 flowchart LR
     DC[DC01<br/>Windows Server<br/>192.168.87.10]
     AD[Active Directory<br/>corp.local]
@@ -33,6 +34,7 @@ flowchart LR
     GPO --> CLIENT
     AD --> CLIENT
     GROUPS --> CLIENT
+```
 
 ## Active Directory Structure
 
