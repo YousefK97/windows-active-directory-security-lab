@@ -216,7 +216,61 @@ Other password-policy controls, including complexity and password history, were 
 
 **Evidence:** `37-password-policy-hardening.png`
 
-## 10. Security Assessment
+## 10. Advanced Audit Policy Assessment
+
+The Windows Advanced Audit Policy configuration was reviewed on the Domain Controller before making any changes.
+
+The initial review identified that Process Creation auditing was not enabled.
+
+### Initial Audit Configuration
+
+| Audit Category            | Initial Configuration |
+| ------------------------- | --------------------- |
+| Logon                     | Success and Failure   |
+| Account Lockout           | Success               |
+| User Account Management   | Success               |
+| Security Group Management | Success               |
+| Process Creation          | No Auditing           |
+
+### Remediation
+
+Process Creation auditing was enabled for both successful and failed events using:
+
+```powershell
+auditpol /set /subcategory:"Process Creation" /success:enable /failure:enable
+```
+
+The configuration was then verified using `auditpol`.
+
+### Validation
+
+A controlled `notepad.exe` process was launched on the Domain Controller.
+
+Windows subsequently generated **Security Event ID 4688**, confirming that the Process Creation audit policy was functioning.
+
+The event was retrieved using PowerShell and confirmed to contain:
+
+* Event ID: 4688
+* Provider: Microsoft-Windows-Security-Auditing
+* Process creation information
+* Event timestamp
+
+### Security Finding
+
+**Finding:** Process Creation auditing was initially disabled.
+
+**Risk:** Without process-creation auditing, investigators have less visibility into programs executed on the Windows system.
+
+**Remediation:** Enabled Process Creation auditing.
+
+**Result:** Event ID 4688 was successfully generated and verified after controlled process execution.
+
+**Evidence:**
+
+* `38-process-creation-auditing.png`
+* `39-process-creation-event-4688.png`
+
+## 11. Security Assessment
 
 The lab demonstrates a basic but functional Active Directory security baseline.
 
@@ -240,7 +294,7 @@ Potential improvements include:
 * Additional endpoint security policies
 * Regular review of privileged group membership
 
-## 11. Conclusion
+## 12. Conclusion
 
 The Active Directory lab successfully demonstrated practical Windows enterprise administration and security concepts in a controlled environment.
 
