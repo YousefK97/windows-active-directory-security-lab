@@ -161,6 +161,53 @@ The evidence includes:
 * Domain and DNS verification
 * Applied Group Policies
 
+## Security Assessment & Hardening
+
+Following the initial Active Directory deployment, a security assessment was performed to identify and address configuration weaknesses.
+
+### Privileged Access Review
+
+Active Directory privileged groups were reviewed using PowerShell, including:
+
+* Domain Admins
+* Enterprise Admins
+* Administrators
+* IT-Admins
+
+The review confirmed that departmental users were not members of the highest-privilege domain groups.
+
+The Windows 10 local `Administrators` group was also reviewed. A local `IEUser` account was identified as having administrative privileges and was documented as a least-privilege security observation.
+
+### Password Policy Hardening
+
+The initial domain password policy required a minimum password length of 7 characters.
+
+This was identified as a security weakness and remediated by increasing the minimum password length to **12 characters**.
+
+The updated configuration was verified using PowerShell.
+
+### Advanced Audit Policy
+
+The Domain Controller's Advanced Audit Policy configuration was reviewed.
+
+Process Creation auditing was initially disabled and was subsequently enabled for successful and failed events.
+
+A controlled `notepad.exe` execution was then performed and **Windows Security Event ID 4688** was successfully generated and verified.
+
+This demonstrated the complete security-control lifecycle:
+
+**Assess → Identify → Remediate → Verify → Document**
+
+### Security Evidence
+
+The security assessment evidence is available in the `screenshots/` directory, including:
+
+* Privileged group review
+* Local administrator review
+* Password policy hardening
+* Process Creation auditing configuration
+* Event ID 4688 verification
+
 ## Skills Demonstrated
 
 * Active Directory administration
