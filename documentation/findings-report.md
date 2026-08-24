@@ -125,7 +125,34 @@ Rather than altering audit settings solely to produce a specific event, the even
 
 This is documented as an investigation limitation rather than being presented as a successful finding.
 
-## 8. Security Assessment
+## 8. Privileged Access Review
+
+A review of privileged Active Directory groups was performed using PowerShell.
+
+The following results were identified:
+
+| Privileged Group | Membership |
+|---|---|
+| Domain Admins | Administrator |
+| Enterprise Admins | Administrator |
+| Administrators | Domain Admins, Enterprise Admins, Administrator |
+| IT-Admins | John Smith |
+
+The review confirmed that the four departmental users were not members of the highly privileged `Domain Admins`, `Enterprise Admins`, or `Administrators` groups.
+
+John Smith was assigned to the custom `IT-Admins` security group to provide IT-specific administrative access without adding the account directly to the highest-privilege domain groups.
+
+### Security Finding
+
+**Finding:** Privileged access is separated from normal departmental accounts.
+
+**Risk:** Excessive membership in privileged groups could allow unnecessary administrative access and increase the impact of a compromised account.
+
+**Current Control:** Administrative access is restricted through dedicated security groups and the highest-privilege groups contain only the built-in Administrator account.
+
+**Assessment:** The current configuration demonstrates a basic least-privilege approach. Further hardening could include dedicated administrative accounts, stronger controls around the built-in Administrator account, and regular privileged-group membership reviews.
+
+## 9. Security Assessment
 
 The lab demonstrates a basic but functional Active Directory security baseline.
 
@@ -149,7 +176,7 @@ Potential improvements include:
 * Additional endpoint security policies
 * Regular review of privileged group membership
 
-## 9. Conclusion
+## 10. Conclusion
 
 The Active Directory lab successfully demonstrated practical Windows enterprise administration and security concepts in a controlled environment.
 
