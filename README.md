@@ -18,6 +18,22 @@ The lab demonstrates practical Windows administration and cybersecurity skills i
 | Network           | Private lab network        |
 | DNS Server        | `192.168.87.10`            |
 
+flowchart LR
+    DC[DC01<br/>Windows Server<br/>192.168.87.10]
+    AD[Active Directory<br/>corp.local]
+    GPO[Group Policy<br/>Security Controls]
+    CLIENT[MSEDGEWIN10<br/>Windows 10]
+    USERS[Domain Users<br/>John / Maria / Alex / David]
+    GROUPS[Security Groups<br/>IT-Admins / HR-Users<br/>Sales-Users / Management]
+
+    DC --> AD
+    AD --> GPO
+    AD --> USERS
+    AD --> GROUPS
+    GPO --> CLIENT
+    AD --> CLIENT
+    GROUPS --> CLIENT
+
 ## Active Directory Structure
 
 The following organizational units were created:
