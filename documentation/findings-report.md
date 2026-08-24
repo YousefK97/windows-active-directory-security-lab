@@ -178,8 +178,45 @@ The local `IEUser` account was also identified as a member of the local Administ
 
 **Lab Decision:** The account was not removed because this is a controlled lab environment and the existing configuration was preserved for documentation and analysis.
 
+## 9. Password Policy Assessment
 
-## 9. Security Assessment
+The default domain password policy was reviewed using PowerShell.
+
+### Initial Configuration
+
+The initial configuration was:
+
+| Setting                 | Initial Value |
+| ----------------------- | ------------: |
+| Minimum password length |  7 characters |
+| Password complexity     |       Enabled |
+| Maximum password age    |       42 days |
+| Minimum password age    |         1 day |
+| Password history        |  24 passwords |
+
+The minimum password length of seven characters was identified as a potential weakness because longer passwords and passphrases provide greater resistance to password-guessing attacks.
+
+### Remediation
+
+The minimum password length was increased from **7 to 12 characters** using the Active Directory default domain password policy.
+
+The updated configuration was then verified using PowerShell.
+
+### Security Finding
+
+**Finding:** The original minimum password length was only seven characters.
+
+**Risk:** Shorter passwords can reduce resistance to password-guessing and brute-force attacks.
+
+**Remediation:** Increased the domain minimum password length to 12 characters.
+
+**Result:** The updated policy was successfully verified.
+
+Other password-policy controls, including complexity and password history, were already enabled.
+
+**Evidence:** `37-password-policy-hardening.png`
+
+## 10. Security Assessment
 
 The lab demonstrates a basic but functional Active Directory security baseline.
 
@@ -203,7 +240,7 @@ Potential improvements include:
 * Additional endpoint security policies
 * Regular review of privileged group membership
 
-## 10. Conclusion
+## 11. Conclusion
 
 The Active Directory lab successfully demonstrated practical Windows enterprise administration and security concepts in a controlled environment.
 
